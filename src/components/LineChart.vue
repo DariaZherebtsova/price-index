@@ -1,7 +1,8 @@
 <script>
-import { Line } from 'vue-chartjs'
+import { Line } from 'vue-chartjs';
 
 export default {
+  name: 'LineChart',
   extends: Line,
   props: ['chartdata', 'options'],
   data() {
