@@ -8,35 +8,58 @@
         <v-container fluid>
           <v-row>
             <v-col
+              class="price-indexes__product-groups"
               cols="12"
               sm="4"
               md="4"
             >
-              <div class="price-indexes__product-groups">
-               <v-checkbox v-for="item in jsonData" :key="item.label"
-                  v-model="cbData"
-                  :label="item.label"
-                  :color="item.borderColor"
-                  value="red"
-                  hide-details
-                ></v-checkbox> 
-              </div>
-              
+              <span class="text-h6">Группы товаров</span>
+              <v-checkbox v-for="item in jsonData" :key="item.label"
+                v-model="selectedProductGroups"
+                :label="item.label"
+                :color="item.borderColor"
+                :value="item.label"
+                hide-details
+              ></v-checkbox> 
             </v-col>
             <v-col
               cols="12"
               sm="8"
               md="8"
             >
-              <div class="chart-wrapper">
-                <LineChart :chartdata="chartdata" :options="options" />
-              </div>
+              <v-card width="800" class="pa-2">
+                <div class="price-indexes__chart__loupe-btn-wrapper">
+                  <v-btn
+                    color="grey"
+                    icon
+                    @click.stop="chartDialog = true"
+                  >
+                    <v-icon>mdi-magnify-plus</v-icon>
+                  </v-btn>
+                </div>
+                <LineChart :chart-data="chartData" :options="options" />
+              </v-card>  
             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
     </v-card>
-    
+    <v-dialog
+      v-model="chartDialog"
+    >
+      <v-card width="90vw" height="90vh" class="pa-2">
+        <div class="price-indexes__chart__loupe-btn-wrapper">
+          <v-btn
+            color="grey"
+            icon
+            @click.stop="chartDialog = false"
+          >
+            <v-icon>mdi-window-close</v-icon>
+          </v-btn>
+        </div>
+        <LineChart :chart-data="chartData" :options="options" :styles="chartStyles" />
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -52,23 +75,19 @@ export default {
   components: {
     LineChart,
   },
-  created() {
+  async created() {
+    await this.getData();
     this.readCSV();
   },
   data: () => ({
-    cbData: ['red', 'indigo', 'orange', 'primary', 'secondary', 'success', 'info', 'warning', 'error', 'red darken-3', 'indigo darken-3', 'orange darken-3'],
-    jsonData: jsonData,
-    chartdata: {
-      labels: ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'],
-      datasets: [
-        {
-          label: "",
-          data: [],
-          backgroundColor: "transparent",
-          borderColor: "rgba(1, 116, 188, 0.50)",
-          pointBackgroundColor: "rgba(171, 71, 188, 1)"
-        }
-      ]
+    selectedProductGroups: [],
+    chartDialog: false,
+    height: 780,
+    jsonData: [],
+    labels: ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'],
+    chartData: {
+      labels: [],
+      datasets: []
     },
     options: {
       responsive: true,
@@ -78,12 +97,34 @@ export default {
       },
     },
   }),
+  watch: {
+    selectedProductGroups(val) {
+      console.log('watch selectedProductGroups', val);
+      let filter = this.jsonData.filter((item => val.includes(item.label)));
+      console.log('filter', filter);
+      this.chartData = {datasets: filter, labels: this.labels};
+    }
+  },
+  computed: {
+    chartStyles () {
+      return {
+        height: `${this.height}px`,
+      }
+    }
+  },
   methods: {
+    async getData() {
+      let url = 'http://localhost:3000/';
+      let response = await fetch(url);
+
+      let data = await response.json(); // читаем ответ в формате JSON
+      console.log('----uhu----');
+      this.jsonData = data;
+    },
     readCSV() {
-
-      console.log('jdonData', jsonData);
-
-      this.chartdata.datasets = jsonData;
+      console.log('jsonData', jsonData);
+      this.chartData = {datasets: jsonData, labels: this.labels};
+      this.selectedProductGroups = jsonData.map(item => item.label)
     },
   },
 }
@@ -100,6 +141,10 @@ export default {
 }
 .price-indexes__product-groups {
   max-width: 280px;
+}
+
+.price-indexes__chart__loupe-btn-wrapper {
+  text-align: end;
 }
 
 .chart-wrapper {
