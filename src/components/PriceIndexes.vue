@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="price-indexes">
     <header class="price-indexes__header">
       <span class="text-h6">Индексы потребительских цен на товары и услуги</span>
     </header>
@@ -8,17 +8,64 @@
         <v-container fluid>
           <v-row>
             <v-col
-              class="price-indexes__product-groups"
+              class="price-indexes_first-col"
+              cols="12"
+              sm="4"
+              md="4"
+            >
+              <span class="text-h6">Данные по годам</span>
+              <v-radio-group
+                v-model="selectedYear"
+                column
+              >
+                <v-radio
+                  label="2020"
+                  value="2020"
+                  color="indigo"
+                ></v-radio>
+                <v-radio
+                  label="2021"
+                  value="2021"
+                  color="indigo"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="8"
+              md="8"
+            >
+              <span class="text-h6">Отображение значений</span>
+              <v-radio-group
+                v-model="selectedValueType"
+                column
+              >
+                <v-radio
+                  label="к декабрю предыдущего года"
+                  value="byDecember"
+                  color="indigo"
+                ></v-radio>
+                <v-radio
+                  label="к предыдущему месяцу"
+                  value="toPreviousMonth"
+                  color="indigo"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+              class="price-indexes_first-col"
               cols="12"
               sm="4"
               md="4"
             >
               <span class="text-h6">Группы товаров</span>
-              <v-checkbox v-for="item in jsonData" :key="item.label"
-                v-model="selectedProductGroups"
-                :label="item.label"
-                :color="item.borderColor"
-                :value="item.label"
+              <v-checkbox v-for="(item, index) in categories" :key="item"
+                v-model="selectedCategories"
+                :label="item"
+                :color="colors[index]"
+                :value="item"
                 hide-details
               ></v-checkbox> 
             </v-col>
@@ -57,7 +104,7 @@
             <v-icon>mdi-window-close</v-icon>
           </v-btn>
         </div>
-        <LineChart :chart-data="chartData" :options="options" :styles="chartStyles" />
+        <LineChart v-if="dataAll" :chart-data="chartData" :options="options" :styles="chartStyles" />
       </v-card>
     </v-dialog>
   </div>
@@ -65,10 +112,7 @@
 
 <script>
 import LineChart from '@/components/LineChart.vue';
-// import * as d3 from 'd3-fetch';
-// import ChartDataSource from 'chartjs-plugin-datasource';
-// import csvFile from '@/assets/data/3.csv';
-import jsonData from '@/assets/data/data2020.json';
+import jsonData from '@/assets/data/datasetAll.json';
 
 export default {
   name: 'PriceIndexes',
@@ -77,14 +121,17 @@ export default {
   },
   async created() {
     await this.getData();
-    this.readCSV();
+    // this.drawChart(this.selectedYear, this.selectedValueType, this.selectedCategories);
   },
   data: () => ({
-    selectedProductGroups: [],
+    selectedCategories: [],
     chartDialog: false,
-    height: 780,
-    jsonData: [],
-    labels: ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'],
+    height: 680,
+    dataAll: [],
+    categories: [],
+    colors: [],
+    selectedYear: '2021',
+    selectedValueType: 'byDecember',
     chartData: {
       labels: [],
       datasets: []
@@ -98,11 +145,16 @@ export default {
     },
   }),
   watch: {
-    selectedProductGroups(val) {
-      console.log('watch selectedProductGroups', val);
-      let filter = this.jsonData.filter((item => val.includes(item.label)));
-      console.log('filter', filter);
-      this.chartData = {datasets: filter, labels: this.labels};
+    selectedCategories(val) {
+      console.log('---selectedCategories', val);
+      this.drawChart(this.selectedYear, this.selectedValueType, val);
+    },
+    selectedYear(val) {
+      this.drawChart(val, this.selectedValueType, this.selectedCategories);
+    },
+    selectedValueType(val) {
+      console.log('---selectedValueType', val);
+      this.drawChart(this.selectedYear, val, this.selectedCategories);
     }
   },
   computed: {
@@ -114,23 +166,42 @@ export default {
   },
   methods: {
     async getData() {
-      let url = 'http://localhost:3000/';
-      let response = await fetch(url);
-
-      let data = await response.json(); // читаем ответ в формате JSON
-      console.log('----uhu----');
-      this.jsonData = data;
+      let data = [];
+      try {
+        let url = 'http://localhost:3000/';
+        let response = await fetch(url);
+        data = await response.json();
+      }
+      catch(err) {
+        // console.error('Get data from server failed', err);
+        // запасной вариант)
+        data = jsonData;
+      }
+      
+      this.dataAll = data;
+      this.colors = data.colors;
+      this.categories = data.categories;
+      this.selectedCategories = data.categories;
     },
-    readCSV() {
-      console.log('jsonData', jsonData);
-      this.chartData = {datasets: jsonData, labels: this.labels};
-      this.selectedProductGroups = jsonData.map(item => item.label)
+    drawChart(year, type, categories) {
+      if (categories.length === this.categories.length) {
+        console.log('--dataset all', this.dataAll.data[year][type]);
+        this.chartData = {datasets: this.dataAll.data[year][type], labels: this.dataAll.data['2020'].labels};
+      } else {
+        let dataset = this.dataAll.data[year][type];
+        console.log('--dataset', dataset);
+        let filteredData = dataset.filter((item => categories.includes(item.label)));
+        this.chartData = {datasets: filteredData, labels: this.dataAll.data['2020'].labels};
+      }
     },
   },
 }
 </script>
 
 <style scoped>
+.price-indexes {
+  min-width: 800px;
+}
 .price-indexes__header {
   height: 50px;
   color: white;
@@ -139,7 +210,7 @@ export default {
   align-items: center;
   padding-left: 30px;
 }
-.price-indexes__product-groups {
+.price-indexes_first-col {
   max-width: 280px;
 }
 

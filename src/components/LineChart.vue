@@ -12,8 +12,13 @@ export default {
     }
   },
   mounted () {
-    console.log('---this.chartData', this.chartData);
     this.renderChart(this.chartData, this.options)
+  },
+  watch: {
+    chartData () {
+      console.log('=====update=====');
+      this.renderChart(this.chartData, this.options)
+    }
   }
 }
 </script>
