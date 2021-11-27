@@ -7,7 +7,6 @@
 
 <script>
 import Chart from 'chart.js';
-import chartData2 from '@/assets/data/chartData.js';
 
 export default {
   name: 'PriceIndexesChart',
@@ -23,15 +22,14 @@ export default {
   },
   data() {
     return {
-      chartData2: chartData2,
       chart: null,
     }
   },
   watch: {
-    needUpdate(val) {
-      if (val) {
-        this.update();
-      }
+    chartData(val) {
+      console.log('--------watch-----');
+      this.chart.data = val;
+      this.update();
     }
   },
   methods: {

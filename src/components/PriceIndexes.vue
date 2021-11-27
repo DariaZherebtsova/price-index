@@ -153,9 +153,8 @@ export default {
       console.log('---selectedCategories', val);
       this.drawChart(this.selectedYear, this.selectedValueType, val);
     },
-    selectedYear() {
-      // this.drawChart(val, this.selectedValueType, this.selectedCategories);
-      this.updateChart = true;
+    selectedYear(val) {
+      this.drawChart(val, this.selectedValueType, this.selectedCategories);
     },
     selectedValueType(val) {
       console.log('---selectedValueType', val);
@@ -192,12 +191,12 @@ export default {
       console.log('*****drawChart*****');
       if (categories.length === this.categories.length) {
         console.log('--dataset all', this.dataAll.data[year][type]);
-        this.chartData = {datasets: this.dataAll.data[year][type], labels: this.dataAll.data['2020'].labels};
+        this.chartData = {datasets: this.dataAll.data[year][type], labels: this.dataAll.data[year].labels};
       } else {
         let dataset = this.dataAll.data[year][type];
         console.log('--dataset', dataset);
         let filteredData = dataset.filter((item => categories.includes(item.label)));
-        this.chartData = {datasets: filteredData, labels: this.dataAll.data['2020'].labels};
+        this.chartData = {datasets: filteredData, labels: this.dataAll.data[year].labels};
       }
     },
   },
