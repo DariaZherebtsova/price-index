@@ -55,7 +55,8 @@
             "103.34"
           ],
           "borderColor": "#4e79a7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Рыбопродукты",
@@ -74,7 +75,8 @@
             "105.64"
           ],
           "borderColor": "#f28e2c",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Ткани",
@@ -93,7 +95,8 @@
             "102.02"
           ],
           "borderColor": "#e15759",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Трикотажные изделия",
@@ -112,7 +115,8 @@
             "102"
           ],
           "borderColor": "#76b7b2",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Макаронные и крупяные изделия",
@@ -131,7 +135,8 @@
             "117.41"
           ],
           "borderColor": "#59a14f",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Плодоовощная продукция, включая картофель",
@@ -150,7 +155,8 @@
             "117.4"
           ],
           "borderColor": "#edc949",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Масло и жиры",
@@ -169,7 +175,8 @@
             "110.97"
           ],
           "borderColor": "#af7aa1",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Чай, кофе, какао",
@@ -188,7 +195,8 @@
             "104.94"
           ],
           "borderColor": "#ff9da7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         }
       ],
       "toPreviousMonth": [
@@ -209,7 +217,8 @@
             "100.7"
           ],
           "borderColor": "#4e79a7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Рыбопродукты",
@@ -228,7 +237,8 @@
             "101.07"
           ],
           "borderColor": "#f28e2c",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Ткани",
@@ -247,7 +257,8 @@
             "100.23"
           ],
           "borderColor": "#e15759",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Трикотажные изделия",
@@ -266,7 +277,8 @@
             "100.13"
           ],
           "borderColor": "#76b7b2",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Макаронные и крупяные изделия",
@@ -285,7 +297,8 @@
             "100.72"
           ],
           "borderColor": "#59a14f",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Плодоовощная продукция, включая картофель",
@@ -304,7 +317,8 @@
             "108.46"
           ],
           "borderColor": "#edc949",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Масло и жиры",
@@ -323,7 +337,8 @@
             "100.95"
           ],
           "borderColor": "#af7aa1",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Чай, кофе, какао",
@@ -342,7 +357,8 @@
             "100.25"
           ],
           "borderColor": "#ff9da7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         }
       ]
     },
@@ -375,7 +391,8 @@
             "112.29"
           ],
           "borderColor": "#4e79a7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Рыбопродукты",
@@ -392,7 +409,8 @@
             "108.31"
           ],
           "borderColor": "#f28e2c",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Ткани",
@@ -409,7 +427,8 @@
             "102.22"
           ],
           "borderColor": "#e15759",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Трикотажные изделия",
@@ -426,7 +445,8 @@
             "103.19"
           ],
           "borderColor": "#76b7b2",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Макаронные и крупяные изделия",
@@ -443,7 +463,8 @@
             "108.81"
           ],
           "borderColor": "#59a14f",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Плодоовощная продукция, включая картофель",
@@ -460,7 +481,8 @@
             "109.27"
           ],
           "borderColor": "#edc949",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Масло и жиры",
@@ -477,7 +499,8 @@
             "106.56"
           ],
           "borderColor": "#af7aa1",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Чай, кофе, какао",
@@ -494,7 +517,8 @@
             "103.8"
           ],
           "borderColor": "#ff9da7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         }
       ],
       "toPreviousMonth": [
@@ -513,7 +537,8 @@
             "101.87"
           ],
           "borderColor": "#4e79a7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Рыбопродукты",
@@ -530,7 +555,8 @@
             "100.91"
           ],
           "borderColor": "#f28e2c",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Ткани",
@@ -547,7 +573,8 @@
             "100.38"
           ],
           "borderColor": "#e15759",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Трикотажные изделия",
@@ -564,7 +591,8 @@
             "100.7"
           ],
           "borderColor": "#76b7b2",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Макаронные и крупяные изделия",
@@ -581,7 +609,8 @@
             "102.09"
           ],
           "borderColor": "#59a14f",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Плодоовощная продукция, включая картофель",
@@ -598,7 +627,8 @@
             "108.65"
           ],
           "borderColor": "#edc949",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Масло и жиры",
@@ -615,7 +645,8 @@
             "101.06"
           ],
           "borderColor": "#af7aa1",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         },
         {
           "label": "Чай, кофе, какао",
@@ -632,7 +663,8 @@
             "100.62"
           ],
           "borderColor": "#ff9da7",
-          "backgroundColor": "transparent"
+          "backgroundColor": "transparent",
+          "borderWidth": 2
         }
       ]
     }

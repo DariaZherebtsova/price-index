@@ -74,7 +74,7 @@
               sm="8"
               md="8"
             >
-              <v-card width="800" class="pa-2">
+              <v-card width="800" class="pa-2 mt-3">
                 <div class="price-indexes__chart__loupe-btn-wrapper">
                   <v-btn
                     color="grey"
@@ -84,7 +84,8 @@
                     <v-icon>mdi-magnify-plus</v-icon>
                   </v-btn>
                 </div>
-                <LineChart :chart-data="chartData" :options="options" />
+                <!-- <LineChart :chartData="chartData" :options="options" /> -->
+                <PriceIndexesChart v-if="dataAll" :chart-data="chartData" :options="options" :needUpdate="updateChart" />
               </v-card>  
             </v-col>
           </v-row>
@@ -112,12 +113,14 @@
 
 <script>
 import LineChart from '@/components/LineChart.vue';
+import PriceIndexesChart from '@/components/PriceIndexesChart.vue';
 import jsonData from '@/assets/data/datasetAll.json';
 
 export default {
   name: 'PriceIndexes',
   components: {
     LineChart,
+    PriceIndexesChart,
   },
   async created() {
     await this.getData();
@@ -127,11 +130,12 @@ export default {
     selectedCategories: [],
     chartDialog: false,
     height: 680,
-    dataAll: [],
+    dataAll: null,
     categories: [],
     colors: [],
-    selectedYear: '2021',
+    selectedYear: '2020',
     selectedValueType: 'byDecember',
+    updateChart: false,
     chartData: {
       labels: [],
       datasets: []
@@ -149,8 +153,9 @@ export default {
       console.log('---selectedCategories', val);
       this.drawChart(this.selectedYear, this.selectedValueType, val);
     },
-    selectedYear(val) {
-      this.drawChart(val, this.selectedValueType, this.selectedCategories);
+    selectedYear() {
+      // this.drawChart(val, this.selectedValueType, this.selectedCategories);
+      this.updateChart = true;
     },
     selectedValueType(val) {
       console.log('---selectedValueType', val);
@@ -184,6 +189,7 @@ export default {
       this.selectedCategories = data.categories;
     },
     drawChart(year, type, categories) {
+      console.log('*****drawChart*****');
       if (categories.length === this.categories.length) {
         console.log('--dataset all', this.dataAll.data[year][type]);
         this.chartData = {datasets: this.dataAll.data[year][type], labels: this.dataAll.data['2020'].labels};

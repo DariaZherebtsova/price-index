@@ -32,10 +32,10 @@ for (let i = 4; i < 12; i++) {
   // 2020
   let data = line.slice(3, 15);
   const borderColor = colors[i-4];
-  dataset.data["2020"].byDecember.push({label, data, borderColor, "backgroundColor": "transparent",});
+  dataset.data["2020"].byDecember.push({label, data, borderColor, "backgroundColor": "transparent", "borderWidth": 2});
   // 2021
   data = line.slice(15);
-  dataset.data["2021"].byDecember.push({label, data, borderColor, "backgroundColor": "transparent",});
+  dataset.data["2021"].byDecember.push({label, data, borderColor, "backgroundColor": "transparent", "borderWidth": 2});
 }
 
 // toPreviousMonth
@@ -45,10 +45,10 @@ for (let i = 12; i < 20; i++) {
   // 2020
   let data = line.slice(3, 15);
   const borderColor = colors[i-12];
-  dataset.data["2020"].toPreviousMonth.push({label, data, borderColor, "backgroundColor": "transparent",});
+  dataset.data["2020"].toPreviousMonth.push({label, data, borderColor, "backgroundColor": "transparent", "borderWidth": 2});
   // 2021
   data = line.slice(15);
-  dataset.data["2021"].toPreviousMonth.push({label, data, borderColor, "backgroundColor": "transparent",});
+  dataset.data["2021"].toPreviousMonth.push({label, data, borderColor, "backgroundColor": "transparent", "borderWidth": 2});
 }
 
 const PORT = process.env.PORT || 3000;
