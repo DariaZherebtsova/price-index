@@ -1,18 +1,13 @@
 <template>
   <div class="price-indexes">
-    <header class="price-indexes__header">
-      <span class="text-h6">Индексы потребительских цен на товары и услуги</span>
-    </header>
-    <v-card flat>
+    <v-card flat tile class="price-indexes__card">
+      <v-card-title class="price-indexes__header">
+        Индексы потребительских цен на товары и услуги
+      </v-card-title>  
       <v-card-text>
-        <v-container fluid>
+        <v-container>
           <v-row>
-            <v-col
-              class="price-indexes_first-col"
-              cols="12"
-              sm="4"
-              md="4"
-            >
+            <v-col class="price-indexes_first-col" cols="12" sm="4" md="4">
               <span class="text-h6">Данные по годам</span>
               <v-radio-group
                 v-model="selectedYear"
@@ -30,11 +25,7 @@
                 ></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col
-              cols="12"
-              sm="8"
-              md="8"
-            >
+            <v-col cols="12" sm="8" md="8">
               <span class="text-h6">Отображение значений</span>
               <v-radio-group
                 v-model="selectedValueType"
@@ -55,11 +46,7 @@
           </v-row>
           <v-row>
             <v-col
-              class="price-indexes_first-col"
-              cols="12"
-              sm="4"
-              md="4"
-            >
+              class="price-indexes_first-col" cols="12" sm="12" md="4">
               <span class="text-h6">Группы товаров</span>
               <v-checkbox v-for="(item, index) in categories" :key="item"
                 v-model="selectedCategories"
@@ -69,23 +56,33 @@
                 hide-details
               ></v-checkbox> 
             </v-col>
-            <v-col
-              cols="12"
-              sm="8"
-              md="8"
-            >
+            <v-col cols="12" sm="12" md="8">
               <v-card width="800" class="pa-2 mt-3">
                 <div class="price-indexes__chart__loupe-btn-wrapper">
                   <v-btn
                     color="grey"
                     icon
-                    @click.stop="chartDialog = true"
+                    @click.stop="isOpenChartDialog = true"
                   >
                     <v-icon>mdi-magnify-plus</v-icon>
                   </v-btn>
                 </div>
-                <!-- <LineChart :chartData="chartData" :options="options" /> -->
-                <PriceIndexesChart v-if="dataAll" :chart-data="chartData" :options="options" :needUpdate="updateChart" />
+                <PriceIndexesChart
+                  v-if="dataAll"
+                  :chart-data="chartData"
+                  :options="chartOptions"
+                  :isEnlarged="isOpenChartDialog"
+                >
+                  <canvas id="price-indexes-chart"></canvas>
+                </PriceIndexesChart>
+                <div v-else class="price-indexes__spinner">
+                  <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    :size="70"
+                    :width="7"
+                  ></v-progress-circular>
+                </div>
               </v-card>  
             </v-col>
           </v-row>
@@ -93,108 +90,116 @@
       </v-card-text>
     </v-card>
     <v-dialog
-      v-model="chartDialog"
+      v-model="isOpenChartDialog"
     >
-      <v-card width="90vw" height="90vh" class="pa-2">
+      <v-card class="price-indexes__chart pa-2">
         <div class="price-indexes__chart__loupe-btn-wrapper">
           <v-btn
             color="grey"
             icon
-            @click.stop="chartDialog = false"
+            @click.stop="isOpenChartDialog = false"
           >
             <v-icon>mdi-window-close</v-icon>
           </v-btn>
         </div>
-        <LineChart v-if="dataAll" :chart-data="chartData" :options="options" :styles="chartStyles" />
+        <PriceIndexesChart
+          v-if="isOpenChartDialog"
+          :chart-data="chartData"
+          :options="largeChartOptions"
+          :isEnlarged="isOpenChartDialog"
+        >
+          <canvas id="price-indexes-chart-large"></canvas>
+        </PriceIndexesChart>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
-import LineChart from '@/components/LineChart.vue';
 import PriceIndexesChart from '@/components/PriceIndexesChart.vue';
 import jsonData from '@/assets/data/datasetAll.json';
 
 export default {
   name: 'PriceIndexes',
   components: {
-    LineChart,
     PriceIndexesChart,
   },
   async created() {
     await this.getData();
-    // this.drawChart(this.selectedYear, this.selectedValueType, this.selectedCategories);
   },
   data: () => ({
     selectedCategories: [],
-    chartDialog: false,
+    isOpenChartDialog: false,
     height: 680,
     dataAll: null,
     categories: [],
     colors: [],
     selectedYear: '2020',
     selectedValueType: 'byDecember',
-    updateChart: false,
     chartData: {
       labels: [],
       datasets: []
     },
-    options: {
+    chartOptions: {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
         display: false,
       },
+      elements: {
+        point:{
+          radius: 0
+        }
+      }
     },
   }),
   watch: {
     selectedCategories(val) {
-      console.log('---selectedCategories', val);
       this.drawChart(this.selectedYear, this.selectedValueType, val);
     },
     selectedYear(val) {
       this.drawChart(val, this.selectedValueType, this.selectedCategories);
     },
     selectedValueType(val) {
-      console.log('---selectedValueType', val);
       this.drawChart(this.selectedYear, val, this.selectedCategories);
-    }
+    },
   },
   computed: {
-    chartStyles () {
+    largeChartOptions() {
       return {
-        height: `${this.height}px`,
-      }
+        ...this.chartOptions,
+        legend: {
+          display: true,
+          position: 'bottom',
+        }
+      };
     }
   },
   methods: {
     async getData() {
       let data = [];
-      try {
-        let url = 'http://localhost:3000/';
-        let response = await fetch(url);
-        data = await response.json();
-      }
-      catch(err) {
-        // console.error('Get data from server failed', err);
-        // запасной вариант)
-        data = jsonData;
-      }
+      // try {
+      //   let url = 'http://localhost:3000/';
+      //   let response = await fetch(url);
+      //   data = await response.json();
+      // }
+      // catch(err) {
+      //   console.error('Get data from server failed', err);
+      // }
+
+      // запасной вариант)
+      data = jsonData;
       
       this.dataAll = data;
       this.colors = data.colors;
       this.categories = data.categories;
-      this.selectedCategories = data.categories;
+      this.selectedCategories = data.categories; //  вызывает drawChart
     },
     drawChart(year, type, categories) {
-      console.log('*****drawChart*****');
       if (categories.length === this.categories.length) {
-        console.log('--dataset all', this.dataAll.data[year][type]);
         this.chartData = {datasets: this.dataAll.data[year][type], labels: this.dataAll.data[year].labels};
       } else {
         let dataset = this.dataAll.data[year][type];
-        console.log('--dataset', dataset);
         let filteredData = dataset.filter((item => categories.includes(item.label)));
         this.chartData = {datasets: filteredData, labels: this.dataAll.data[year].labels};
       }
@@ -205,26 +210,39 @@ export default {
 
 <style scoped>
 .price-indexes {
-  min-width: 800px;
+  max-width: 1000px;
+  min-width: 600px;
+  height: 100vh;
 }
+
 .price-indexes__header {
-  height: 50px;
   color: white;
   background-color: rgb(53 91 190);
-  display: flex;
-  align-items: center;
   padding-left: 30px;
 }
+
+.price-indexes__card {
+  height: 100vh;
+}
+
 .price-indexes_first-col {
   max-width: 280px;
 }
 
-.price-indexes__chart__loupe-btn-wrapper {
-  text-align: end;
+.price-indexes__spinner {
+  width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.chart-wrapper {
-  width: 800px;
-  height: 500px;
+.price-indexes__chart {
+  width: 90vw;
+  height: 90vh;
+}
+
+.price-indexes__chart__loupe-btn-wrapper {
+  text-align: end;
 }
 </style>

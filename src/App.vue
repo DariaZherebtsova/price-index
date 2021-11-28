@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-main>
+    <div class="app__wrap">
       <PriceIndexes />
-    </v-main>
+    </div>
   </v-app>
 </template>
 
@@ -21,5 +21,10 @@ export default {
 </script>
 
 <style>
-
+.app__wrap {
+  min-width: 580px;
+  display: flex;
+  justify-content: center;
+  background-color: whitesmoke;
+}
 </style>

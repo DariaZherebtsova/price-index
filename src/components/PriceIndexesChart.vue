@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <canvas id="price-indexes-chart"></canvas>
+    <slot></slot>
   </div>
 </template>
 
@@ -10,32 +10,36 @@ import Chart from 'chart.js';
 
 export default {
   name: 'PriceIndexesChart',
-  props: ['chartData', 'options', 'needUpdate'],
+  props: ['chartData', 'options', 'isEnlarged'],
   mounted() {
-    console.log('---mounted', this.chartData);
-    const ctx = document.getElementById('price-indexes-chart');
+    const ctx = document.getElementById(this.canvasId);    
     this.chart = new Chart(ctx, {
       type: "line",
       data: this.chartData,
       options: this.options,
     });
+    if (this.isEnlarged) {
+      ctx.style.height = `${Math.floor(document.documentElement.clientHeight * 0.8)}px`;
+    }
   },
   data() {
     return {
       chart: null,
     }
   },
+  computed: {
+    canvasId() {
+      return this.isEnlarged ? 'price-indexes-chart-large' : 'price-indexes-chart'
+    }
+  },
   watch: {
     chartData(val) {
-      console.log('--------watch-----');
       this.chart.data = val;
       this.update();
-    }
+    },
   },
   methods: {
     update() {
-      console.log("---update---");
-      // myLineChart.data.datasets[0].data[2] = 50;
       this.chart.update();
     }
   }
@@ -49,4 +53,7 @@ export default {
   height: 350px;
 }
 
+#price-indexes-chart-large {
+  width: 800px;
+}
 </style>
