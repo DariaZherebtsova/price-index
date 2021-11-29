@@ -1,6 +1,6 @@
 # price-index
 
-Индексы потребительских цен на товары и услуги (источник: https://www.fedstat.ru/) 
+Индексы потребительских цен на товары и услуги (источник: https://www.fedstat.ru/)  
 Проект на Vue с библиотекой chartjs  
 
 ![Screenshot](/src/assets/screenshot.png)
