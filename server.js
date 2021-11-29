@@ -5,7 +5,7 @@ const app = express();
 
 const colors = ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1", "#ff9da7", "#9c755f", "#bab0ab"]
 	
-let fileContent = fs.readFileSync("./src/assets/data/datasetAll.csv", "utf8");
+let fileContent = fs.readFileSync("./src/assets/data/dataset.csv", "utf8");
 let arrLines  = fileContent.split("\r\n");
 
 let dataset = {

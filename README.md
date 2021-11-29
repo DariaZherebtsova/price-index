@@ -1,24 +1,14 @@
 # price-index
 
-## Project setup
-```
-yarn install
-```
+Индексы потребительских цен на товары и услуги (источник: https://www.fedstat.ru/) 
+Проект на Vue с библиотекой chartjs  
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+![Screenshot](/src/assets/screenshot.png)
 
-### Compiles and minifies for production
-```
-yarn build
-```
+Пакетный менеджер yarn  
+yarn install  
+yarn serve  
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Данные можно брать из файла dataset.json или получать с сервера  
+node server.js  - запуск сервера  
+url = 'http://localhost:3000/'

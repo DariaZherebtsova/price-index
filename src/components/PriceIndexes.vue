@@ -117,7 +117,7 @@
 
 <script>
 import PriceIndexesChart from '@/components/PriceIndexesChart.vue';
-import jsonData from '@/assets/data/datasetAll.json';
+import jsonData from '@/assets/data/dataset.json';
 
 export default {
   name: 'PriceIndexes',
@@ -193,7 +193,7 @@ export default {
       this.dataAll = data;
       this.colors = data.colors;
       this.categories = data.categories;
-      this.selectedCategories = data.categories; //  вызывает drawChart
+      this.selectedCategories = data.categories; // вызывает drawChart
     },
     drawChart(year, type, categories) {
       if (categories.length === this.categories.length) {
