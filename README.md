@@ -5,6 +5,8 @@
 
 ![Screenshot](/src/assets/screenshot.png)
 
+https://dariazherebtsova.github.io/price-index/
+
 Пакетный менеджер yarn  
 yarn install  
 yarn serve  
